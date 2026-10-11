@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Aldo Fransisco, AI student at Universitas Pelita Harapan. Data cleaning, analysis and visualization with Python and Excel.">
+<meta name="author" content="Aldo Fransisco">
+<meta property="og:title" content="Aldo Fransisco · Data Analysis Portfolio">
+<meta property="og:description" content="Messy data in. Clear answers out. Data cleaning, analysis and reports with Python and Excel.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231f6b58'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='17' fill='white' text-anchor='middle'%3EAF%3C/text%3E%3C/svg%3E">
+<title>Aldo Fransisco · Data Analysis Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; }
+
+/* Layout: one narrow reading column; hero pairs a short pitch with a before/after data sample. */
+:root {
+  --bg: #f6f7f5;
+  --surface: #ffffff;
+  --fg: #16201d;
+  --muted: #5d6965;
+  --line: #dde2df;
+  --accent: #1f6b58;
+  --accent-soft: #e3efea;
+  --warn: #9a5b12;
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111715; --surface: #172019; --fg: #e6ece9; --muted: #98a6a1;
+    --line: #2a3531; --accent: #6cc3a6; --accent-soft: #1d2f29; --warn: #e0a85c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111715; --surface: #172019; --fg: #e6ece9; --muted: #98a6a1;
+  --line: #2a3531; --accent: #6cc3a6; --accent-soft: #1d2f29; --warn: #e0a85c;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.6; padding-inline: 20px; }
+.wrap { max-width: 880px; margin: 0 auto; padding-block: 40px 64px; display: grid; gap: 72px; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 500; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+h1 { font-size: clamp(2.2rem, 5.5vw, 3.4rem); line-height: 1.08; }
+h2 { font-size: 1.9rem; line-height: 1.2; }
+h3 { font-size: 1.3rem; line-height: 1.3; }
+p { margin: 0; }
+.label { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+
+/* top bar */
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.mark { font-family: var(--display); font-size: 1.25rem; }
+.nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.nav a { color: var(--muted); text-decoration: none; font-size: 0.92rem; }
+.nav a:hover { color: var(--fg); }
+
+/* hero */
+.hero { display: grid; grid-template-columns: 1.15fr 1fr; gap: 40px; align-items: center; }
+.hero > * { min-width: 0; }
+.pitch { display: grid; gap: 20px; }
+.pitch .lead { color: var(--muted); font-size: 1.08rem; max-width: 34ch; }
+.status { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--fg); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-block; padding: 11px 20px; border-radius: 6px; font-weight: 500; font-size: 0.95rem; text-decoration: none; border: 1px solid var(--accent); }
+.btn.primary { background: var(--accent); color: var(--bg); }
+.btn.ghost { color: var(--accent); }
+
+/* before/after data sample */
+.sample { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 14px; font-family: var(--mono); font-size: 0.8rem; }
+.sample .row-label { display: flex; justify-content: space-between; }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+td, th { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { color: var(--muted); font-weight: 500; }
+.bad { color: var(--warn); }
+.good { color: var(--accent); }
+.arrow { text-align: center; color: var(--muted); }
+
+/* sections */
+section { display: grid; gap: 28px; }
+.head { display: grid; gap: 8px; }
+.head p { color: var(--muted); max-width: 60ch; }
+
+.about { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.about > * { min-width: 0; }
+.about p { max-width: 62ch; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; align-content: start; }
+.chip { font-family: var(--mono); font-size: 0.8rem; padding: 5px 10px; border-radius: 4px; background: var(--accent-soft); color: var(--fg); }
+
+.projects { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.project { display: grid; grid-template-columns: 180px 1fr; gap: 24px; padding-block: 26px; border-bottom: 1px solid var(--line); }
+.project > * { min-width: 0; }
+.project .meta { display: grid; gap: 6px; align-content: start; }
+.project .body { display: grid; gap: 10px; }
+.project .body p { color: var(--muted); }
+.project ul { margin: 0; padding-left: 18px; color: var(--muted); }
+.project .body a { font-weight: 500; font-size: 0.95rem; }
+.soon { color: var(--warn); }
+
+.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.svc { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 22px; display: grid; gap: 12px; align-content: start; }
+.svc.featured { border-color: var(--accent); }
+.price { font-family: var(--display); font-size: 2rem; line-height: 1; }
+.price small { font-family: var(--body); font-size: 0.85rem; color: var(--muted); }
+.svc ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 0.93rem; }
+
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; counter-reset: s; }
+.step { display: grid; gap: 6px; border-top: 2px solid var(--accent); padding-top: 14px; }
+.step p { color: var(--muted); font-size: 0.93rem; }
+
+.contact { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 32px; display: grid; gap: 18px; }
+.email { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.email code { font-family: var(--mono); font-size: 1rem; user-select: all; padding: 8px 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); word-break: break-all; }
+.copy { font: inherit; font-size: 0.9rem; padding: 8px 14px; border-radius: 6px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; }
+footer { color: var(--muted); font-size: 0.85rem; }
+
+@media (max-width: 760px) {
+  .hero, .about { grid-template-columns: 1fr; }
+  .project { grid-template-columns: 1fr; gap: 10px; }
+  .services { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 440px) { .steps { grid-template-columns: 1fr; } .contact { padding: 22px; } }
+@media (prefers-reduced-motion: no-preference) { .btn, .nav a { transition: color .15s, background .15s; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="mark">Aldo Fransisco</span>
+    <nav class="nav">
+      <a href="#work">Work</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="pitch">
+      <span class="status"><span class="dot"></span>Available for new projects</span>
+      <h1>Messy data in. Clear answers out.</h1>
+      <p class="lead">I'm an Artificial Intelligence student in Indonesia who cleans, analyzes and visualizes data with Python and Excel for small businesses and researchers.</p>
+      <div class="actions">
+        <a class="btn primary" href="#contact">Start a project</a>
+        <a class="btn ghost" href="#work">See my work</a>
+      </div>
+    </div>
+
+    <figure class="sample" aria-label="Example of a data row before and after cleaning" style="margin:0">
+      <div class="row-label"><span class="label">before</span><span class="label">sales_raw.csv</span></div>
+      <div class="tbl"><table>
+        <tr><th>date</th><th>city</th><th>revenue</th></tr>
+        <tr><td class="bad">03/9/26</td><td class="bad">jakarta </td><td class="bad">Rp1.250.000,-</td></tr>
+        <tr><td class="bad">2026-9-4</td><td class="bad">JKT</td><td class="bad">—</td></tr>
+      </table></div>
+      <div class="arrow">↓ cleaned</div>
+      <div class="row-label"><span class="label">after</span><span class="label">sales_clean.csv</span></div>
+      <div class="tbl"><table>
+        <tr><th>date</th><th>city</th><th>revenue_idr</th></tr>
+        <tr><td class="good">2026-09-03</td><td class="good">Jakarta</td><td class="good">1250000</td></tr>
+        <tr><td class="good">2026-09-04</td><td class="good">Jakarta</td><td class="good">NaN · flagged</td></tr>
+      </table></div>
+    </figure>
+  </div>
+
+  <section id="about">
+    <div class="head"><span class="label">About</span><h2>Careful work, explained in plain language</h2></div>
+    <div class="about">
+      <p>I study Artificial Intelligence at Universitas Pelita Harapan, with coursework in statistics, linear algebra and machine learning. I enjoy the unglamorous part of data work: finding the duplicates, fixing the formats, and checking that the numbers add up before anyone draws a chart. Every delivery comes with a short note on what I changed and why, so you can trust the result and reuse it.</p>
+      <div class="tools">
+        <span class="chip">Python</span><span class="chip">pandas</span><span class="chip">NumPy</span>
+        <span class="chip">scikit-learn</span><span class="chip">Matplotlib</span><span class="chip">Seaborn</span>
+        <span class="chip">Excel</span><span class="chip">Google Sheets</span><span class="chip">Jupyter</span>
+        <span class="chip">SQL</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="head"><span class="label">Selected work</span><h2>Projects</h2><p>Practice projects built on public datasets, so you can see exactly how I work.</p></div>
+    <div class="projects">
+      <article class="project">
+        <div class="meta"><span class="label">Data cleaning</span><span class="label">Python · pandas</span></div>
+        <div class="body">
+          <h3>Online retail data clean-up</h3>
+          <p>Cleaned 541,909 real transactions from a UK online gift shop into 519,740 trustworthy sales. Every removed row is saved with the reason it was removed.</p>
+          <ul><li>Found that a common shortcut overstates revenue by £784,924 (8%) and ranks postage fees as the #1 product</li><li>Matched cancellations to the original sales, catching a cancelled 80,995-unit order</li><li>Flagged 131,387 guest-checkout sales instead of inventing customer IDs</li></ul>
+          <a href="https://github.com/aldofransisco2008-create/online-retail-cleaning" target="_blank" rel="noopener">View code and report on GitHub →</a>
+        </div>
+      </article>
+      <article class="project">
+        <div class="meta"><span class="label">Game · solo project</span><span class="label">Python · pygame</span></div>
+        <div class="body">
+          <h3>Poke'R</h3>
+          <p>A roguelike arcade dice-poker game I designed and built alone for my Python Project course at Universitas Pelita Harapan. Roll dice, build poker combos and collect special dice to beat 50 rounds and 5 bosses.</p>
+          <ul><li>About 7,800 lines of Python, organized into game logic, scenes, UI and effects</li><li>48 special dice with their own powers and animations</li><li>Automated tests, plus a simulator that plays thousands of runs to balance the difficulty</li></ul>
+          <a href="https://github.com/aldofransisco2008-create/poke-r" target="_blank" rel="noopener">View code and rules on GitHub →</a>
+        </div>
+      </article>
+      <article class="project">
+        <div class="meta"><span class="label">Analysis & reporting</span><span class="label">pandas · Matplotlib</span></div>
+        <div class="body">
+          <h3>Monthly sales performance report</h3>
+          <p>Turned a year of cleaned sales (£9.41M, 18,883 orders) into a one-page PDF report a shop owner can read in five minutes, with a clear action for every finding.</p>
+          <ul><li>Showed that September to November brings 38% of yearly revenue, and when to stock up</li><li>Found that the top 10% of customers bring 60% of known-customer revenue</li><li>Showed that 20% of products earn 78% of revenue, to guide range decisions</li></ul>
+          <a href="https://github.com/aldofransisco2008-create/online-retail-sales-report" target="_blank" rel="noopener">View report and code on GitHub →</a>
+        </div>
+      </article>
+      <article class="project">
+        <div class="meta"><span class="label">Machine learning</span><span class="label">scikit-learn</span><span class="label soon">In progress</span></div>
+        <div class="body">
+          <h3>Customer churn prediction</h3>
+          <p>Built a simple, explainable model that estimates which customers are likely to leave, and showed which factors matter most.</p>
+          <ul><li>Train/test split with honest accuracy, precision and recall</li><li>Feature importance chart explained without jargon</li></ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="head"><span class="label">Services</span><h2>Packages</h2><p>Fixed prices so you know the cost upfront. Larger or custom jobs are quoted after a short chat.</p></div>
+    <div class="services">
+      <div class="svc">
+        <span class="label">Basic</span>
+        <span class="price">$10 <small>/ file</small></span>
+        <ul><li>Clean one file up to 1,000 rows</li><li>Clean Excel or CSV delivered</li><li>Notes on every change</li></ul>
+      </div>
+      <div class="svc featured">
+        <span class="label">Standard</span>
+        <span class="price">$25 <small>/ file</small></span>
+        <ul><li>Everything in Basic</li><li>Summary statistics</li><li>3 clear charts</li></ul>
+      </div>
+      <div class="svc">
+        <span class="label">Premium</span>
+        <span class="price">$50 <small>/ project</small></span>
+        <ul><li>Everything in Standard</li><li>Full analysis of your question</li><li>Short PDF report of findings</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><span class="label">Process</span><h2>How we work together</h2></div>
+    <div class="steps">
+      <div class="step"><h3>Brief</h3><p>You share the data and the question you want answered.</p></div>
+      <div class="step"><h3>Plan</h3><p>I confirm scope, price and delivery date before starting.</p></div>
+      <div class="step"><h3>Deliver</h3><p>You get the files, charts and a short explanation.</p></div>
+      <div class="step"><h3>Revise</h3><p>Revisions included in your package until it fits.</p></div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <span class="label">Contact</span>
+    <h2>Have a dataset that needs attention?</h2>
+    <p style="color:var(--muted);max-width:56ch">Send a message with a short description of your data. I usually reply within a few hours (GMT+7).</p>
+    <div class="email">
+      <code id="mail">aldofransisco2008@gmail.com</code>
+      <button class="copy" id="copyBtn" type="button">Copy email</button>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="https://www.fiverr.com/" target="_blank" rel="noopener">Hire me on Fiverr</a>
+      <a class="btn ghost" href="https://github.com/aldofransisco2008-create" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>© 2026 Aldo Fransisco · Data analysis with Python & Excel</footer>
+</div>
+
+<script>
+document.getElementById('copyBtn').addEventListener('click', function () {
+  var btn = this, text = document.getElementById('mail').textContent;
+  function done(msg) { btn.textContent = msg; setTimeout(function () { btn.textContent = 'Copy email'; }, 1800); }
+  function fallback() {
+    var r = document.createRange(); r.selectNodeContents(document.getElementById('mail'));
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done('Selected');
+  }
+  try { navigator.clipboard.writeText(text).then(function () { done('Copied'); }, fallback); } catch (e) { fallback(); }
+});
+</script>
+</body>
+</html>
